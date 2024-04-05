@@ -1,0 +1,73 @@
+﻿<Window x:Class="ProjectManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectManager"
+        xmlns:pages="clr-namespace:ProjectManager.Pages"
+        xmlns:viewmodel="clr-namespace:ProjectManager.Core.ViewModel"
+        mc:Ignorable="d"
+        Title="Менеджер проектов" Height="600" Width="1000">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:WindowCommands.OpenPage" Executed="PageOpened"/>
+        <CommandBinding Command="local:WindowCommands.Logout" Executed="Logout"/>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+    <DockPanel LastChildFill="True">
+        <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Background="Gray" 
+                      Visibility="{Binding Path=IsLogged, Converter={StaticResource VisibilityConverter}}">
+            <StackPanel x:Name="LeftUserView" Width="150" >
+                <TextBlock Margin="5,5,5,5" FontWeight="Bold">
+                    Имя пользователя:
+                </TextBlock>
+                <TextBlock x:Name="UsernameText" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <TextBlock Margin="5,5,5,5" FontWeight="Bold">
+                    Имя Git:
+                </TextBlock>
+                <TextBlock x:Name="GitUsernameText" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <TextBlock Margin="5,5,5,5" FontWeight="Bold">
+                    Роль:
+                </TextBlock>
+                <TextBlock x:Name="UserRole" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <Button x:Name="logoutButton" Background="White" Margin="10,10,10,10" Foreground="Black"
+                        Command="local:WindowCommands.Logout">
+                    Выйти
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Background="Gray" 
+                      Visibility="{Binding Path=IsNotLogged, Converter={StaticResource VisibilityConverter}}">
+            <StackPanel x:Name="LeftLoginInvitationView" Width="150" >
+                <TextBlock Margin="5,5,5,5"><Run Text="Вы не вошли в систему"/></TextBlock>
+                <Button x:Name="loginButton" Background="White" Margin="10,10,10,10" Foreground="Black"
+            Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:LoginPage}" Content="Войти"/>
+            </StackPanel>
+        </ScrollViewer>
+        <WrapPanel DockPanel.Dock="Top" Background="DimGray">
+            <Button Width="Auto" Height="30" Name="MainMenuButton" Margin="5, 5, 5, 5" Background="White"
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:MainPage}">
+                <TextBlock Text="Главное меню" Margin="5, 5, 5, 5" Foreground="Black"/>
+            </Button>
+            <Button Width="Auto" Height="30" Name="ProfileButton" Margin="5, 5, 5, 5" Background="White"
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ProfilePage}">
+                <TextBlock Text="Профиль" Margin="5, 5, 5, 5" Foreground="Black"/>
+            </Button>
+            <Button Width="Auto" Height="30" Name="EmployeeButton" Margin="5, 5, 5, 5" Background="White"
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:EmployeersPage}">
+                <TextBlock x:Name="EmployeeButtonText" Text="Учет кадров" Margin="5, 5, 5, 5" Foreground="Black"/>
+            </Button>
+            <Button Width="Auto" Height="30" Name="ProjectsButton" Margin="5, 5, 5, 5" Background="White"
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ProjectsPreviewPage}">
+                <TextBlock Text="Проекты" Margin="5, 5, 5, 5" Foreground="Black"/>
+            </Button>
+            <Button Width="Auto" Height="30" Name="ReportButton" Margin="5, 5, 5, 5" Background="White"
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ReportPage}">
+                <TextBlock Text="Отчет" Margin="5, 5, 5, 5" Foreground="Black"/>
+            </Button>
+        </WrapPanel>
+        <Frame x:Name="CurrentPage" NavigationUIVisibility="Hidden"/>
+        
+    </DockPanel>
+</Window>

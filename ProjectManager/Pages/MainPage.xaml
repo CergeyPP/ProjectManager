@@ -1,0 +1,58 @@
+﻿<Page x:Class="ProjectManager.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ProjectManager.Pages"
+      xmlns:main="clr-namespace:ProjectManager"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="LightGray"  Margin="15,15,15,15">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="5, 5, 5, 5" Grid.Row="0" FontSize="16" TextAlignment="Center">
+                Статус разработки
+            </TextBlock>
+            <TextBlock Margin="5, 5, 5, 5" Grid.Row="1" FontSize="12" Text="Здесь будет статус разработки"/>
+            <Button Margin="5, 5, 5, 5" Grid.Row="2" HorizontalAlignment="Right" Width="Auto">
+                <TextBlock Margin="5, 5, 5, 5">Перейти к отчетам</TextBlock>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Background="LightGray"  Margin="15,15,15,15">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="5, 5, 5, 5" Grid.Row="0" FontSize="16" TextAlignment="Center">
+                Ближайшие задачи
+            </TextBlock>
+            <TextBlock Margin="5, 5, 5, 5" Grid.Row="1" FontSize="12" Text="Здесь парочка задач"/>
+            <Button Margin="5, 5, 5, 5" Grid.Row="2" HorizontalAlignment="Right" Width="Auto">
+                <TextBlock Margin="5, 5, 5, 5">Перейти к задачам</TextBlock>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2" Background="LightGray"  Margin="15,15,15,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="5, 5, 5, 5" Grid.Row="0" FontSize="16" TextAlignment="Center">
+                Уведомления
+            </TextBlock>
+            <ListBox Grid.Row="1" Margin="5, 5, 5, 5">
+                
+            </ListBox>
+        </Grid>
+    </Grid>
+</Page>
