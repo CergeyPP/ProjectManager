@@ -13,24 +13,25 @@
         <CommandBinding Command="local:WindowCommands.Logout" Executed="Logout"/>
     </Window.CommandBindings>
     <Window.Resources>
+        <viewmodel:LoggedUserViewModel x:Key="LoggedUserVM"/>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Background="Gray" 
-                      Visibility="{Binding Path=IsLogged, Converter={StaticResource VisibilityConverter}}">
+                      Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=IsLogged, Converter={StaticResource VisibilityConverter}}">
             <StackPanel x:Name="LeftUserView" Width="150" >
                 <TextBlock Margin="5,5,5,5" FontWeight="Bold">
                     Имя пользователя:
                 </TextBlock>
-                <TextBlock x:Name="UsernameText" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <TextBlock x:Name="UsernameText" Margin="5,5,5,5" Text="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.FullName}"/>
                 <TextBlock Margin="5,5,5,5" FontWeight="Bold">
                     Имя Git:
                 </TextBlock>
-                <TextBlock x:Name="GitUsernameText" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <TextBlock x:Name="GitUsernameText" Margin="5,5,5,5" Text="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.GitUsername}"/>
                 <TextBlock Margin="5,5,5,5" FontWeight="Bold">
                     Роль:
                 </TextBlock>
-                <TextBlock x:Name="UserRole" Margin="5,5,5,5" Text='Вы не авторизованы'/>
+                <TextBlock x:Name="UserRole" Margin="5,5,5,5" Text="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.Name}"/>
                 <Button x:Name="logoutButton" Background="White" Margin="10,10,10,10" Foreground="Black"
                         Command="local:WindowCommands.Logout">
                     Выйти
@@ -38,7 +39,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Background="Gray" 
-                      Visibility="{Binding Path=IsNotLogged, Converter={StaticResource VisibilityConverter}}">
+                      Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=IsNotLogged, Converter={StaticResource VisibilityConverter}}">
             <StackPanel x:Name="LeftLoginInvitationView" Width="150" >
                 <TextBlock Margin="5,5,5,5"><Run Text="Вы не вошли в систему"/></TextBlock>
                 <Button x:Name="loginButton" Background="White" Margin="10,10,10,10" Foreground="Black"

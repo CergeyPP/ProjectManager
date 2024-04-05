@@ -35,6 +35,7 @@ namespace ProjectManager.Core.Model
             {
                 _family = value;
                 NotifyPropertyChanged("Family");
+                UpdateFullName();
             } 
         }
         public string Name
@@ -47,6 +48,7 @@ namespace ProjectManager.Core.Model
             {
                 _name = value;
                 NotifyPropertyChanged("Name");
+                UpdateFullName();
             }
         }
         public string LastName
@@ -59,6 +61,7 @@ namespace ProjectManager.Core.Model
             {
                 _lastName = value;
                 NotifyPropertyChanged("LastName");
+                UpdateFullName();
             }
         }
         public string GitUsername
@@ -126,6 +129,25 @@ namespace ProjectManager.Core.Model
             }
         }
 
+        private string _fullName = "";
+        private void UpdateFullName()
+        {
+            FullName = Family + " " + Name[0] + "." + (LastName != null && LastName.Length > 0 ? LastName[0].ToString() + '.' : "");
+
+        }
+        public string FullName
+        {
+            get
+            {
+                return _fullName;
+            }
+            set
+            {
+                _fullName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public User()
         {
 
@@ -134,12 +156,13 @@ namespace ProjectManager.Core.Model
         public User(uint id, string family, string name, string lastName, string gitUsername, string token, string email)
         {
             Id = id;
-            Family = family;
-            Name = name;
-            LastName = lastName;
-            GitUsername = gitUsername;
-            Token = token;
-            Email = email;
+            _family = family;
+            _name = name;
+            _lastName = lastName;
+            _gitUsername = gitUsername;
+            _token = token;
+            _email = email;
+            UpdateFullName();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

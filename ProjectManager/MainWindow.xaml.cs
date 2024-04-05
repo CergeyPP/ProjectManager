@@ -24,7 +24,6 @@ namespace ProjectManager
     }
     public partial class MainWindow : Window
     {
-        private LoggedUserViewModel userViewModel;
 
         public MainWindow()
         {
@@ -34,19 +33,13 @@ namespace ProjectManager
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            userViewModel = new LoggedUserViewModel();
-            DataContext = userViewModel;
+            LoggedUserViewModel loggedUserVM = Resources["LoggedUserVM"] as LoggedUserViewModel;
 
             ProjectManagerApp app = (ProjectManagerApp)Application.Current;
             var loginController = app.LoginController;
-            loginController.UserChanged += OnLoggedUserChanged;
+            loginController.UserChanged += loggedUserVM.OnLoggedUserChanged;
 
             WindowCommands.OpenPage.Execute(typeof(Pages.LoginPage), this);
-        }
-
-        private void OnLoggedUserChanged(User user)
-        {
-            userViewModel.LoggedUser = user;
         }
 
         private void PageOpened(object sender, ExecutedRoutedEventArgs e)

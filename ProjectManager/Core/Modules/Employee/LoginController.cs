@@ -7,6 +7,7 @@ namespace ProjectManager.Core.Modules.Employee
     {
         private User _loggedUser = null;
         public event Action<User> UserChanged;
+
         public User LoggedUser
         {
             get

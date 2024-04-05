@@ -19,7 +19,7 @@ namespace ProjectManager.Core.ViewModel
             set { 
                 SetValue(LoggedUserProperty, value); 
                 IsLogged = value != null && value.IsValid;
-                NotifyPropertyChanged();
+                NotifyPropertyChanged("LoggedUser");
             }
         }
 
@@ -32,8 +32,8 @@ namespace ProjectManager.Core.ViewModel
             get { return (bool)GetValue(IsLoggedProperty); }
             private set { 
                 SetValue(IsLoggedProperty, value);
-                NotifyPropertyChanged();
                 IsNotLogged = !IsLogged;
+                NotifyPropertyChanged("IsLogged");
             }
         }
 
@@ -57,6 +57,11 @@ namespace ProjectManager.Core.ViewModel
         public LoggedUserViewModel()
         {
             LoggedUser = null;
+        }
+
+        public void OnLoggedUserChanged(User loggedUser)
+        {
+            LoggedUser = loggedUser;
         }
     }
 }
