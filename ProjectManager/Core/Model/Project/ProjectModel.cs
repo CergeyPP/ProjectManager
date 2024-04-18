@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Core.Model.Project
 {
-    public class Project : INotifyPropertyChanged
+    public class ProjectModel : INotifyPropertyChanged
     {
         private uint _id = 0;
         private string _name = "";
         private string _description = "";
-        private string _link = "";
-        private ProjectLinkedPath _localPath = null;
+        private string _link = null;
 
         public uint Id
         {
@@ -61,18 +60,6 @@ namespace ProjectManager.Core.Model.Project
             set
             {
                 _link = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public ProjectLinkedPath LocalPath
-        {
-            get
-            {
-                return _localPath;
-            }
-            set
-            {
-                _localPath = value;
                 NotifyPropertyChanged();
             }
         }

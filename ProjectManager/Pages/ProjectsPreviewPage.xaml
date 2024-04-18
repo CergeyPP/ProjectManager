@@ -4,39 +4,60 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ProjectManager.Pages"
+      xmlns:vm="clr-namespace:ProjectManager.Core.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProjectsPreviewPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LoginUserDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <vm:ProjectsViewModel x:Key="ProjectVM"/>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+            <local:NullToVisibleConverter x:Key="NullConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
     <DockPanel Background="White" LastChildFill="True">
         <StackPanel DockPanel.Dock="Right" Margin="15, 15, 15, 15" Width="96">
-            <Button Margin="0,0,0,15">К моим задачам</Button>
-            <Button Margin="0,0,0,15">Новый проект</Button>
-            <Button Margin="0,0,0,15">
-                <StackPanel>
-                    <TextBlock>Добавить к </TextBlock>
-                    <TextBlock>отслеживанию</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Margin="0,0,0,15">Добавить задачу</Button>
-            <Button Margin="0,0,0,15">Удалить задачу</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanDoTasks, Converter={StaticResource VisibilityConverter}}">К моим задачам</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Новый проект</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Добавить задачу</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Удалить задачу</Button>
         </StackPanel>
         <TextBlock DockPanel.Dock="Top" Text="Проекты" Height="30" FontWeight="Bold" FontSize="20" Margin="15,15,15,5" />
         <ScrollViewer DockPanel.Dock="Left" Margin="15, 0, 15, 15" HorizontalScrollBarVisibility="Auto">
-            <ListBox x:Name="ProjectList"  Width="200">
+            <ListBox x:Name="ProjectList"  Width="200" 
+                     ItemsSource="{Binding Projects, Source={StaticResource ProjectVM}}"
+                     SelectionChanged="OnSelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding Path=ProjectId}"/>
-                            <TextBlock Text="{Binding Path=Path}"/>
+                            <TextBlock Text="{Binding Path=Id}"/>
+                            <TextBlock Text="{Binding Path=Name}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
         <Border BorderBrush="LightSlateGray" BorderThickness="1" Margin="0,0,0,15">
-            <ContentControl>
-                
-            </ContentControl>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Visibility="{Binding SelectedItem, ElementName=ProjectList, Converter={StaticResource NullConverter}}" d:Visibility="Visible">
+                    <TextBlock FontSize="16" FontWeight="Bold" Margin="10, 10, 10, 0">
+                    Название проекта:
+                    </TextBlock>
+                    <TextBlock Margin="10, 10, 10, 5" Text="{Binding Path=SelectedProject.Name, Source={StaticResource ProjectVM}}" d:Text="Название"/>
+                    <TextBlock FontSize="12" FontWeight="Bold" Margin="10, 10, 10, 0">
+                    Описание:
+                    </TextBlock>
+                    <TextBlock Margin="10, 10, 10, 0" Text="{Binding Path=SelectedProject.Description, Source={StaticResource ProjectVM}}" d:Text="Описание проекта"/>
+                    <TextBlock FontSize="12" FontWeight="Bold" Margin="10, 10, 10, 0">
+                    Ссылка на репозиторий:
+                    </TextBlock>
+                    <TextBlock Margin="10, 10, 10, 0" Text="{Binding Path=SelectedProject.GitLink, TargetNullValue='Не установлено', Source={StaticResource ProjectVM}}" d:Text="линк на гит"/>
+                </StackPanel>
+            </ScrollViewer>
         </Border>
 
     </DockPanel>

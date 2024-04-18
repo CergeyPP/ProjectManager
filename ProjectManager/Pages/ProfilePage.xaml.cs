@@ -55,6 +55,8 @@ namespace ProjectManager.Pages
                 MessageBox.Show("Токен Git не может быть пустым");
             if (Password.Password != PasswordRetry.Password)
                 MessageBox.Show("Пароли не совпадают. Проверьте корректность ввода");
+            if (!Email.Text.Contains("@"))
+                MessageBox.Show("E-mail должен содержать символ @");
             User newUser = new User(
                 _loginController.LoggedUser.Id,
                 Family.Text,

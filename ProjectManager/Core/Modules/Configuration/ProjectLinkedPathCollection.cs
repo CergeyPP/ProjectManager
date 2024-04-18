@@ -12,6 +12,10 @@ namespace ProjectManager.Core.Modules
             {
                 return base["ProjectLinkedPaths"] as ProjectLinkedPathCollection;
             }
+            set
+            {
+                base["ProjectLinkedPaths"] = value;
+            }
         }
     }
 
@@ -21,12 +25,22 @@ namespace ProjectManager.Core.Modules
         public ProjectLinkedPath this[int idx]
         {
             get { return (ProjectLinkedPath)BaseGet(idx); }
+            set
+            {
+                BaseAdd(idx, value);
+            }
+        }
+
+        public void Add(ProjectLinkedPath path)
+        {
+            BaseAdd(path, false);
         }
 
         public ProjectLinkedPathCollection()
         {
 
         }
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new ProjectLinkedPath();

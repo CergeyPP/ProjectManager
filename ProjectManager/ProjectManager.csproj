@@ -137,7 +137,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Model\Project\Project.cs" />
+    <Compile Include="Core\Model\Project\ProjectModel.cs" />
     <Compile Include="Core\Model\Project\ProjectLinkedPath.cs" />
     <Compile Include="Core\Model\Role.cs" />
     <Compile Include="Core\Model\User.cs" />
@@ -145,8 +145,11 @@
     <Compile Include="Core\Modules\Database\DatabaseProvider.cs" />
     <Compile Include="Core\Modules\Employee\UserDatabaseProvider.cs" />
     <Compile Include="Core\Modules\Employee\LoginController.cs" />
+    <Compile Include="Core\Modules\Project\ProjectController.cs" />
     <Compile Include="Core\Modules\Project\ProjectDatabaseProvider.cs" />
+    <Compile Include="Core\Modules\Project\ProjectLocalPathProvider.cs" />
     <Compile Include="Core\ViewModel\LoggedUserViewModel.cs" />
+    <Compile Include="Core\ViewModel\ProjectsViewModel.cs" />
     <Compile Include="Pages\EmployeersPage.xaml.cs">
       <DependentUpon>EmployeersPage.xaml</DependentUpon>
     </Compile>
