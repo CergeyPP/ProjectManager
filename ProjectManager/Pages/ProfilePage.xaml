@@ -5,10 +5,21 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ProjectManager.Pages"
       xmlns:main="clr-namespace:ProjectManager"
+      xmlns:viewmodel="clr-namespace:ProjectManager.Core.ViewModel"
+      xmlns:model="clr-namespace:ProjectManager.Core.Model"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProfilePage">
-
+    <Page.CommandBindings>
+        <CommandBinding Command="local:ProfilePageCommands.ChangeEditsCommand" Executed="OnChangeEdits"/>
+    </Page.CommandBindings>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LoginUserDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Background="White">
         <ScrollViewer Margin="15,15,0,15" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
@@ -16,31 +27,38 @@
                 <TextBlock Margin="5, 5, 5, 0">
                     Фамилия
                 </TextBlock>
-                <TextBox x:Name="Family" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="Family" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.Family, Source={StaticResource LoggedUserVM}, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Имя
                 </TextBlock>
-                <TextBox x:Name="name" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="name" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.Name, Source={StaticResource LoggedUserVM}}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Отчество
                 </TextBlock>
-                <TextBox x:Name="LastName" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="LastName" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.LastName, Source={StaticResource LoggedUserVM}}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Должность
                 </TextBlock>
-                <TextBlock x:Name="Role" Margin="5, 0, 5, 5">{Здесь будет имя его должности}</TextBlock>
+                <TextBlock x:Name="Role" Margin="5, 0, 5, 5" 
+                           Text="{Binding Path=LoggedUser.Role.Name, Source={StaticResource LoggedUserVM}}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Имя пользователя Git
                 </TextBlock>
-                <TextBox x:Name="GitUsername" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="GitUsername" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.GitUsername, Source={StaticResource LoggedUserVM}}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Токен
                 </TextBlock>
-                <TextBox x:Name="GitToken" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="GitToken" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.Token, Source={StaticResource LoggedUserVM}}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     E-mail
                 </TextBlock>
-                <TextBox x:Name="Email" Margin="5, 0, 5, 5"></TextBox>
+                <TextBox x:Name="Email" Margin="5, 0, 5, 5"
+                         Text="{Binding Path=LoggedUser.Email, Source={StaticResource LoggedUserVM}, Mode=TwoWay}"/>
                 <TextBlock Margin="5, 5, 5, 0">
                     Пароль
                 </TextBlock>
@@ -50,7 +68,8 @@
                 </TextBlock>
                 <PasswordBox x:Name="PasswordRetry" Margin="5, 0, 5, 5"></PasswordBox>
                 <TextBlock x:Name="ErrorTextBlock" Margin="5, 5, 5, 0" Foreground="Red" Visibility="Collapsed" />
-                <Button Margin="5, 5, 5, 5" Width="Auto" HorizontalAlignment="Left">
+                <Button Margin="5, 5, 5, 5" Width="Auto" HorizontalAlignment="Left"
+                        Command="local:ProfilePageCommands.ChangeEditsCommand">
                     Сохранить изменения
                 </Button>
             </StackPanel>

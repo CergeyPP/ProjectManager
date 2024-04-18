@@ -52,5 +52,14 @@ namespace ProjectManager.Core.Modules.Employee
                 return false;
             }
         }
+
+        public void ChangeUserSettings(User user, string password = "")
+        {
+            if (user == null) return;
+            if (_userDatabaseProvider.UpdateUserByID(user.Id, user, password))
+            {
+                LoggedUser = user;
+            }
+        }
     }
 }

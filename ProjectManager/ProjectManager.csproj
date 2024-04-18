@@ -113,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LoginUserDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\EmployeersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,7 +137,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\CoreCommands.cs" />
     <Compile Include="Core\Model\Project\Project.cs" />
     <Compile Include="Core\Model\Project\ProjectLinkedPath.cs" />
     <Compile Include="Core\Model\Role.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Core\Modules\Database\DatabaseProvider.cs" />
     <Compile Include="Core\Modules\Employee\UserDatabaseProvider.cs" />
     <Compile Include="Core\Modules\Employee\LoginController.cs" />
+    <Compile Include="Core\Modules\Project\ProjectDatabaseProvider.cs" />
     <Compile Include="Core\ViewModel\LoggedUserViewModel.cs" />
     <Compile Include="Pages\EmployeersPage.xaml.cs">
       <DependentUpon>EmployeersPage.xaml</DependentUpon>

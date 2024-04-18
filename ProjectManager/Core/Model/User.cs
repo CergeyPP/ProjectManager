@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ProjectManager.Core.Model
 {
-    public class User
+    public class User : ICloneable
     {
         private uint _id = 0;
         private string _family = "";
@@ -172,6 +173,13 @@ namespace ProjectManager.Core.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public object Clone()
+        {
+            User user = new User(Id, Family, Name, LastName, GitUsername, Token, Email);
+            user.Role = Role;
+            return user;
         }
     }
 }

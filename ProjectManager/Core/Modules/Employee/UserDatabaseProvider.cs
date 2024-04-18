@@ -100,5 +100,33 @@ namespace ProjectManager.Core.Modules.Employee
 
 
         //}
+
+        public bool UpdateUserByID(uint id, User user, string password = "")
+        {
+            var connection = _dataProvider.CreateConnection();
+
+            var command = new NpgsqlCommand(
+                "update public.user " +
+                "set family=($1), name=($2), last_name=($3), git_username=($4), token=($5), email=($6), " + (password.Length > 0 ? "password=($9), " : "") + "role_id=($7)" +
+                "where user_id=($8);",
+                connection
+            )
+            {
+                Parameters ={
+                    new NpgsqlParameter() {Value = user.Family},
+                    new NpgsqlParameter() {Value = user.Name},
+                    new NpgsqlParameter() {Value = user.LastName},
+                    new NpgsqlParameter() {Value = user.GitUsername},
+                    new NpgsqlParameter() {Value = user.Token},
+                    new NpgsqlParameter() {Value = user.Email},
+                    new NpgsqlParameter() {Value = (int)user.Role.Id},
+                    new NpgsqlParameter() {Value = (int)id},
+                    new NpgsqlParameter() {Value = password}
+                }
+            };
+
+            int result = command.ExecuteNonQuery();
+            return result == 1;
+        }
     }
 }

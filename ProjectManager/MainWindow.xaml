@@ -13,8 +13,12 @@
         <CommandBinding Command="local:WindowCommands.Logout" Executed="Logout"/>
     </Window.CommandBindings>
     <Window.Resources>
-        <viewmodel:LoggedUserViewModel x:Key="LoggedUserVM"/>
-        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="LoginUserDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        </ResourceDictionary>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Background="Gray" 
@@ -46,7 +50,8 @@
             Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:LoginPage}" Content="Войти"/>
             </StackPanel>
         </ScrollViewer>
-        <WrapPanel DockPanel.Dock="Top" Background="DimGray">
+        <Grid Height="40" DockPanel.Dock="Top" Background="DimGray">
+        <WrapPanel Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=IsLogged, Converter={StaticResource VisibilityConverter}}">
             <Button Width="Auto" Height="30" Name="MainMenuButton" Margin="5, 5, 5, 5" Background="White"
                     Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:MainPage}">
                 <TextBlock Text="Главное меню" Margin="5, 5, 5, 5" Foreground="Black"/>
@@ -56,18 +61,22 @@
                 <TextBlock Text="Профиль" Margin="5, 5, 5, 5" Foreground="Black"/>
             </Button>
             <Button Width="Auto" Height="30" Name="EmployeeButton" Margin="5, 5, 5, 5" Background="White"
-                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:EmployeersPage}">
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:EmployeersPage}"
+                Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageUsers, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock x:Name="EmployeeButtonText" Text="Учет кадров" Margin="5, 5, 5, 5" Foreground="Black"/>
             </Button>
             <Button Width="Auto" Height="30" Name="ProjectsButton" Margin="5, 5, 5, 5" Background="White"
-                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ProjectsPreviewPage}">
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ProjectsPreviewPage}"
+                    Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanInteractProjects, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock Text="Проекты" Margin="5, 5, 5, 5" Foreground="Black"/>
             </Button>
             <Button Width="Auto" Height="30" Name="ReportButton" Margin="5, 5, 5, 5" Background="White"
-                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ReportPage}">
+                    Command="local:WindowCommands.OpenPage" CommandParameter="{x:Type pages:ReportPage}"
+                    Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanDoReports, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock Text="Отчет" Margin="5, 5, 5, 5" Foreground="Black"/>
             </Button>
         </WrapPanel>
+        </Grid>
         <Frame x:Name="CurrentPage" NavigationUIVisibility="Hidden"/>
         
     </DockPanel>

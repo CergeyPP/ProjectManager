@@ -9,6 +9,7 @@ namespace ProjectManager.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
+        public static RoutedCommand LoginCommand = new RoutedCommand("Login", typeof(LoginPage));
         public LoginPage()
         {
             InitializeComponent();
@@ -28,6 +29,10 @@ namespace ProjectManager.Pages
                 ErrorTextBox.Text = "Ошибка при входе, проверьте данные";
                 ErrorTextBox.Visibility = Visibility.Visible;
             }
+        }
+        private void CanLogin(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = emailTextBox.Text.Length > 0 && emailTextBox.Text.Contains("@") && passwordTextBox.Password.Length > 0;
         }
     }
 }

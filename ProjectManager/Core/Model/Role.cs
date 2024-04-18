@@ -10,6 +10,8 @@ namespace ProjectManager.Core.Model
         public bool CanManageProjects { get; set; } = false;
         public bool CanManageUsers { get; set; } = false;
         public bool CanDoReports { get; set; } = false;
+
+        public bool CanInteractProjects => CanDoTasks || CanManageProjects;
         public bool IsValid => Id != 0;
         public Role()
         {

@@ -39,13 +39,18 @@ namespace ProjectManager
             var loginController = app.LoginController;
             loginController.UserChanged += loggedUserVM.OnLoggedUserChanged;
 
+            CurrentPage.Navigated += PageNavigated;
+
             WindowCommands.OpenPage.Execute(typeof(Pages.LoginPage), this);
         }
 
         private void PageOpened(object sender, ExecutedRoutedEventArgs e)
         {
             if (CurrentPage.Navigate(Activator.CreateInstance(e.Parameter as Type) as Page) && CurrentPage.CanGoBack)
-                CurrentPage.RemoveBackEntry();
+            {
+                while (CurrentPage.CanGoBack)
+                    CurrentPage.NavigationService.RemoveBackEntry();
+            }
         }
 
         private void Logout(object sender, ExecutedRoutedEventArgs e)
@@ -56,6 +61,11 @@ namespace ProjectManager
             {
                 WindowCommands.OpenPage.Execute(typeof(Pages.LoginPage), this);
             }
+        }
+
+        private void PageNavigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            CurrentPage.NavigationService.RemoveBackEntry();
         }
     }
 }
