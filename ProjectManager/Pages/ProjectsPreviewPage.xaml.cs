@@ -9,6 +9,7 @@ using System.Windows.Data;
 using ProjectManager.Core.Model.Project;
 using ProjectManager.Core.Modules;
 using ProjectManager.Core.ViewModel;
+using ProjectManager.DialogMenus;
 
 namespace ProjectManager.Pages
 {
@@ -28,6 +29,27 @@ namespace ProjectManager.Pages
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _projectViewModel.SelectedProject = ProjectList.SelectedItem as ProjectModel;
+        }
+
+        private void TaskPageClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommands.OpenPage.Execute(typeof(TasksPage), this);
+        }
+        private void NewProjectClick(object sender, RoutedEventArgs e)
+        {
+            NewProjectWindow newProjectWindow = new NewProjectWindow();
+
+
+
+            newProjectWindow.Show();
+        }
+        private void NewTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void DeleteTaskClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

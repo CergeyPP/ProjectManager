@@ -34,7 +34,7 @@ namespace ProjectManager
             ProjectDatabaseProvider projectDatabaseProvider = new ProjectDatabaseProvider(databaseProvider);
             ProjectLocalPathProvider projectLocalPathProvider = new ProjectLocalPathProvider();
 
-            _projectController = new ProjectController(projectDatabaseProvider, projectLocalPathProvider);
+            _projectController = new ProjectController(projectDatabaseProvider, projectLocalPathProvider, _loginController);
         }
     }
 }

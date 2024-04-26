@@ -21,10 +21,10 @@
     </Page.Resources>
     <DockPanel Background="White" LastChildFill="True">
         <StackPanel DockPanel.Dock="Right" Margin="15, 15, 15, 15" Width="96">
-            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanDoTasks, Converter={StaticResource VisibilityConverter}}">К моим задачам</Button>
-            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Новый проект</Button>
-            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Добавить задачу</Button>
-            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}">Удалить задачу</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanDoTasks, Converter={StaticResource VisibilityConverter}}" Click="TaskPageClick">К моим задачам</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}" Click="NewProjectClick">Новый проект</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}" Click="NewTaskClick">Добавить задачу</Button>
+            <Button Margin="0,0,0,15" Visibility="{Binding Source={StaticResource LoggedUserVM}, Path=LoggedUser.Role.CanManageProjects, Converter={StaticResource VisibilityConverter}}" Click="DeleteTaskClick">Удалить задачу</Button>
         </StackPanel>
         <TextBlock DockPanel.Dock="Top" Text="Проекты" Height="30" FontWeight="Bold" FontSize="20" Margin="15,15,15,5" />
         <ScrollViewer DockPanel.Dock="Left" Margin="15, 0, 15, 15" HorizontalScrollBarVisibility="Auto">
