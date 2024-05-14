@@ -13,9 +13,9 @@ namespace ProjectManager.Core.Modules.Project
         private Configuration _configFile;
         private ProjectLinkedPathConfigSection _configSection;
 
-        public ProjectLinkedPath GetProjectPathById(int id)
+        public ProjectLinkedPath GetProjectPathById(uint id)
         {
-            return new ProjectLinkedPath(_configSection.LinkedPaths[id].ProjectId, _configSection.LinkedPaths[id].Path);
+            return _configSection.LinkedPaths.Get(id);
         }
 
         public void AddOrUpdateProjectPathById(ProjectLinkedPath path)

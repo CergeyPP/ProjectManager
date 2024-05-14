@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Core.Model.Project;
+using ProjectManager.Core.Modules;
 using ProjectManager.Core.Modules.Project;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,21 @@ namespace ProjectManager.Core.ViewModel
         public ProjectModel SelectedProject 
         {
             get { return (ProjectModel)GetValue(SelectedProjectProperty); }
-            set { SetValue(SelectedProjectProperty, value); }
+            set { 
+                SetValue(SelectedProjectProperty, value);
+                ProjectLocalPath = _controller.GetProjectLocalPath(value);
+            }
         }
+
+        public ProjectLinkedPath ProjectLocalPath
+        {
+            get { return (ProjectLinkedPath)GetValue(ProjectLocalPathProperty); }
+            set { SetValue(ProjectLocalPathProperty, value); NotifyPropertyChanged(); }
+        }
+
+        // Using a DependencyProperty as the backing store for ProjectLocalPath.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProjectLocalPathProperty =
+            DependencyProperty.Register("ProjectLocalPath", typeof(ProjectLinkedPath), typeof(ProjectsViewModel), new PropertyMetadata(null));
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedProjectProperty =
@@ -42,6 +56,8 @@ namespace ProjectManager.Core.ViewModel
 
             Projects = _controller.Projects;
             _controller.LoadProjects();
+
+            ProjectLocalPath = null;
         }
     }
 }

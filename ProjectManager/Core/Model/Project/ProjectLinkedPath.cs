@@ -45,6 +45,7 @@ namespace ProjectManager.Core.Model.Project
 
         public ProjectLinkedPath(uint id, string path)
         {
+            ProjectId = id;
             ProjectIdString = id.ToString();
             Path = path;
         }

@@ -27,13 +27,18 @@ namespace ProjectManager.Core.Modules
             get { return (ProjectLinkedPath)BaseGet(idx); }
             set
             {
-                BaseAdd(idx, value);
+                BaseAdd(value, false);
             }
         }
 
         public void Add(ProjectLinkedPath path)
         {
             BaseAdd(path, false);
+        }
+
+        public ProjectLinkedPath Get(uint id)
+        {
+            return BaseGet(id.ToString()) as ProjectLinkedPath;
         }
 
         public ProjectLinkedPathCollection()

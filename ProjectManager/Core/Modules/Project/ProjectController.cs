@@ -32,7 +32,8 @@ namespace ProjectManager.Core.Modules.Project
 
         public ProjectLinkedPath GetProjectLocalPath(ProjectModel project)
         {
-            return _localPathProvider.GetProjectPathById((int)project.Id);
+
+            return project == null ? null :_localPathProvider.GetProjectPathById(project.Id);
         }
 
         public ProjectController(ProjectDatabaseProvider databaseProvider, ProjectLocalPathProvider localPathProvider, LoginController loginController)
@@ -44,11 +45,10 @@ namespace ProjectManager.Core.Modules.Project
 
         public void CreateNewProject(string name, string description, string localpath)
         {
-
             if (Repository.IsValid(localpath))
             {
                 Repository repo = new Repository(localpath);
-                string link = repo.Network.Remotes.First().Url;
+                string link = repo.Network.Remotes["origin"].Url;
                 ProjectModel model = new ProjectModel();
                 model.Name = name;
                 model.Description = description;
@@ -72,7 +72,50 @@ namespace ProjectManager.Core.Modules.Project
             {
                 MessageBox.Show("Папка не является рабочей директорией Git", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+        }
+
+        public void TryAddOrCloneLocalPath(ProjectModel model, string path)
+        {
+            if (model == null || path == "")
+                return;
+
+            if (!Repository.IsValid(path))
+            {
+                var co = new CloneOptions()
+                {
+                    FetchOptions =
+                    {
+                        CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials
+                        {
+                            Username = "x-access-token",
+                            Password = _loginController.LoggedUser.Token
+                        }
+                    }
+                };
+
+                try
+                {
+                    Repository.Clone(model.GitLink, path, co);
+                    _localPathProvider.AddOrUpdateProjectPathById(
+                        new ProjectLinkedPath(model.Id, path));
+                }
+                catch (LibGit2SharpException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                
+            }
+            else
+            {
+                var repo = new Repository(path);
+                string link = repo.Network.Remotes["origin"].Url;
+                if (link == model.GitLink)
+                    _localPathProvider.AddOrUpdateProjectPathById(
+                        new ProjectLinkedPath(model.Id, path));
+                else
+                    MessageBox.Show($"Папка является рабочей директорией другого репозитория Git\nСсылка на гит проекта: {model.GitLink}\nСсылка на гит в директории: {repo.Info.Path}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
+
